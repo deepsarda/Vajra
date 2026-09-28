@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vajra"
+version = "0.1.0"
+description = "Lightning and thunderstorm nowcasting for India: physics moves storms, AI grows them."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Team LowBattery" }]
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "opencv-python-headless>=4.8",
+  "shapely>=2.0",
+]
+
+[project.optional-dependencies]
+model = ["torch>=2.2"]
+sevir = ["h5py>=3.10", "fsspec>=2024.2", "aiohttp>=3.9"]
+steps = ["pysteps>=1.10"]
+radar = ["xradar>=0.5", "xarray>=2024.1", "zarr>=2.17"]
+test = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+vajra = "vajra.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vajra"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
